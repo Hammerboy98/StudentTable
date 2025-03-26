@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentTable.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace StudentTable.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
@@ -13,6 +15,8 @@ namespace StudentTable.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<StudentProfile>()
                 .HasOne(p => p.Student)
                 .WithOne()
